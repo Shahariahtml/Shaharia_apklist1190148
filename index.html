@@ -5,32 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apks & Games List</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes hoverEffect {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+         .slide-in-left {
+      animation: slideInLeft 1s ease-in-out forwards;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+        
+        
         body {
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #ff00cc, #333399);
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #ff00cc, #333399, #a400ff);
             color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 145vh;
+            animation: fadeIn 0.5s ease-in-out;
         }
         .container {
             max-width: 800px;
+            width: 90%;
             margin: 0 auto;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.01);
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 5);
+            backdrop-filter: blur(10px);
+            animation: slideInUp 1s ease-in-out;
         }
-
         header {
             text-align: center;
             margin-bottom: 20px;
         }
-
+        header h1 {
+            font-size: 2em;
+            font-weight: 700;
+            animation: hoverEffect 1s;
+        }
         .app-list {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-
         .app-item {
             display: flex;
             justify-content: space-between;
@@ -39,31 +78,76 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            animation: slideInLeft 1s ease-in-out;
+            transition: transform 1s, background 0.3s;
         }
-
+        .app-item:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
         .app-details {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             max-width: 70%;
         }
-
+        .app-details h2 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        .app-details p {
+            margin: 0;
+            font-size: 0.9em;
+        }
         .download-btn {
             padding: 10px 20px;
             background-color: #ff6600;
-            border: none;
             border-radius: 5px;
             color: white;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 1em;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border: true;
+      border-color: #ff6600;
         }
-
         .download-btn:hover {
-            background-color: #cc5200;
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+            background:transparent;
+            box-shadow: 0 0 20px rgba(0, 0, 10, 0.5);
+            color:#9aff40;
+            border-color: #9aff40;
+        }
+        .app-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            background-size: cover;
+            background-position: center;
+        }
+        @media (max-width: 600px) {
+            .app-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .app-details {
+                max-width: 100%;
+                flex-direction: row;
+                gap: 10px;
+            }
+            .download-btn {
+                align-self: stretch;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Apks & Games List</h1>
+            <h1>Apks &amp; Games List</h1>
         </header>
         <div class="app-list" id="app-list">
             <!-- App items will be dynamically generated here -->
@@ -71,15 +155,12 @@
     </div>
     <script>
         const apps = [
-            { name: 'YouTube Premium', description: '91MB.(G_Drive)', downloadLink: 'https://drive.usercontent.google.com/download?id=1RxpP5VAmfW5YbMyFe1fet1nBh27u-Ao9&export=view&authuser=0' },
-            { name: 'YouTube Premium', description: '139~MB.', downloadLink: 'https://github.com/revancedapps/revanced.net/releases/download/2024-14/revanced.net_revanced_youtube_v19.09.37_cli4.6.0_p4.6.1.1.apk' },
-            { name: 'Micro-G', description: 'YouTube Premium Optimizer.', downloadLink: 'https://github.com/revancedapps/revanced.net/releases/download/2024-13/revanced.net_revanced_gms_microg_v0.3.1.3.240913.apk' },
-            { name: 'Newpipe', description: 'Video & Audio Downloader.', downloadLink: 'https://archive.newpipe.net/fdroid/repo/NewPipe_v0.26.1.apk' },
-            { name: 'Mini_Militia', description: '50MB(Mega)', downloadLink: 'https://mega.nz/file/jPYwDCqR#POCJsNP6K0MixL2TmQxAISWV0Az-dZJYXvlC07-4-Wc' },
-            { name: 'Mini_Militia', description: '50MB(G_Drive)', downloadLink: 'https://drive.usercontent.google.com/download?id=1Moxq3VjHXF8IfqOzhTf3pbk_ZIhX9QeY&export=view&authuser=1' } 
-
-            
-            // Add more app objects as needed
+            { name: 'YouTube Premium', description: '91MB.(G_Drive)', downloadLink: 'https://drive.usercontent.google.com/download?id=1RxpP5VAmfW5YbMyFe1fet1nBh27u-Ao9&export=view&authuser=0', icon: 'https://cdn-icons-png.flaticon.com/512/1384/1384060.png' },
+            { name: 'YouTube Premium', description: '139~MB.', downloadLink: 'https://github.com/revancedapps/revanced.net/releases/download/2024-14/revanced.net_revanced_youtube_v19.09.37_cli4.6.0_p4.6.1.1.apk', icon: 'https://cdn-icons-png.flaticon.com/512/1384/1384060.png' },
+            { name: 'Micro-G', description: 'YouTube Premium Optimizer.', downloadLink: 'https://github.com/revancedapps/revanced.net/releases/download/2024-13/revanced.net_revanced_gms_microg_v0.3.1.3.240913.apk', icon: 'https://upload.wikimedia.org/wikipedia/commons/d/da/MicroG.png' },
+            { name: 'Newpipe', description: 'Video & Audio Downloader.', downloadLink: 'https://archive.newpipe.net/fdroid/repo/NewPipe_v0.26.1.apk', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/NewPipelogo.svg/1200px-NewPipelogo.svg.png' },
+            { name: 'Mini_Militia(BD)', description: '50MB(Mega)', downloadLink: 'https://mega.nz/file/jPYwDCqR#POCJsNP6K0MixL2TmQxAISWV0Az-dZJYXvlC07-4-Wc', icon: 'https://play-lh.googleusercontent.com/ffGx9o8K6RI7DJuADt95JiyhhU74jqbvm1h8QRb6yoI67bL17Q23xVmZw79N-u9URHA' },
+            { name: 'Mini_Militia(BD)', description: '50MB(G_Drive)', downloadLink: 'https://drive.usercontent.google.com/download?id=1Moxq3VjHXF8IfqOzhTf3pbk_ZIhX9QeY&export=view&authuser=1', icon: 'https://s.cafebazaar.ir/images/icons/com.appsomniacs.da2-3537beca-b6e8-4949-935a-40bb80785e1c_512x512.png?x-img=v1/resize,h_256,w_256,lossless_false/optimize' }
         ];
 
         function downloadApp(link) {
@@ -88,12 +169,19 @@
 
         function generateAppList() {
             const appListContainer = document.getElementById('app-list');
-            apps.forEach(app => {
+            apps.forEach((app, index) => {
                 const appItem = document.createElement('div');
                 appItem.classList.add('app-item');
+                appItem.style.animationDelay = `${index * 0.1}s`;
 
                 const appDetails = document.createElement('div');
                 appDetails.classList.add('app-details');
+
+                const appIcon = document.createElement('div');
+                appIcon.classList.add('app-icon');
+                appIcon.style.backgroundImage = `url(${app.icon})`;
+
+                const appText = document.createElement('div');
 
                 const appName = document.createElement('h2');
                 appName.textContent = app.name;
@@ -106,8 +194,10 @@
                 downloadButton.textContent = 'Download';
                 downloadButton.onclick = () => downloadApp(app.downloadLink);
 
-                appDetails.appendChild(appName);
-                appDetails.appendChild(appDescription);
+                appText.appendChild(appName);
+                appText.appendChild(appDescription);
+                appDetails.appendChild(appIcon);
+                appDetails.appendChild(appText);
                 appItem.appendChild(appDetails);
                 appItem.appendChild(downloadButton);
 
