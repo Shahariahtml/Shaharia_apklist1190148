@@ -18,22 +18,21 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
-         .slide-in-left {
-      animation: slideInLeft 1s ease-in-out forwards;
-    }
+        .slide-in-left {
+            animation: slideInLeft 1s ease-in-out forwards;
+        }
 
-    @keyframes slideInLeft {
-      from {
-        transform: translateX(-100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-        
-        
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
@@ -42,48 +41,109 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 145vh;
+            height: 100vh; /* Fix the height of the body */
+            overflow: hidden; /* Hide the overflow */
             animation: fadeIn 0.5s ease-in-out;
         }
         .container {
             max-width: 800px;
             width: 90%;
+            height: 80vh; /* Fix the height of the container */
             margin: 0 auto;
-            padding: 20px;
+            padding: 40px; /* Increase padding to create more space around the items */
             background: rgba(0, 0, 0, 0.01);
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 5);
             backdrop-filter: blur(10px);
             animation: slideInUp 1s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Hide overflow for the container */
+            margin-top: 100;
+            margin-bottom:100; 0;
         }
         header {
-            text-align: center;
-            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
         }
         header h1 {
             font-size: 2em;
             font-weight: 700;
             animation: hoverEffect 1s;
+            
         }
+        .search-bar {
+    padding: 10px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1); /* Transparent background */
+    color: white; /* Text color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    position: relative; /* Ensure position context for backdrop */
+    z-index: 1; /* Ensure above backdrop */
+}
+
+.search-bar:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.2); /* Slightly more opaque when focused */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transform: scale(1.05);
+}
+
+.search-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Backdrop color and transparency */
+    border-radius: 5px; /* Same as search bar */
+    z-index: -1; /* Behind search bar */
+    opacity: 0; /* Initially invisible */
+    transition: opacity 0.3s; /* Smooth transition */
+}
+
+.search-bar:focus::before {
+    opacity: 1; /* Show backdrop on focus */
+}
+
+.search-bar::placeholder {
+    color: white !important; /* Color of the placeholder text */
+    opacity: 0.8; /* Opacity of the placeholder text */
+}
+
         .app-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+             overflow-y: auto ; /* Enable vertical scrolling */
+    max-height: 70vh; /* Adjust the maximum height as needed */
+    overflow-x: hidden; /* Hide the horizontal scrollbar */
         }
+        .app-list::-webkit-scrollbar {
+            display: none;
+        }
+        
         .app-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
+            padding: 5px 24px;
+            margin-bottom: 20px; /* Add margin to create space between items */
             background: rgba(255, 255, 255, 0.1);
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             animation: slideInLeft 1s ease-in-out;
-            transition: transform 1s, background 0.3s;
+            transition: transform 0.3s, background 0.3s, z-index 0.3s;
+            position: relative;
+            z-index: 0;
         }
         .app-item:hover {
             transform: scale(1.05);
             background: rgba(255, 255, 255, 0.2);
+            z-index: 1; /* Bring the hovered item to the front */
         }
         .app-details {
             display: flex;
@@ -109,14 +169,14 @@
             font-size: 1em;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             border: true;
-      border-color: #ff6600;
+            border-color: #ff6600;
         }
         .download-btn:hover {
             background-color: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
-            background:transparent;
+            background: transparent;
             box-shadow: 0 0 20px rgba(0, 0, 10, 0.5);
-            color:#9aff40;
+            color: #9aff40;
             border-color: #9aff40;
         }
         .app-icon {
@@ -127,6 +187,10 @@
             background-position: center;
         }
         @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
             .app-item {
                 flex-direction: column;
                 align-items: flex-start;
@@ -148,6 +212,7 @@
     <div class="container">
         <header>
             <h1>Apks &amp; Games List</h1>
+            <input type="text" class="search-bar" id="search-bar" placeholder="Search...">
         </header>
         <div class="app-list" id="app-list">
             <!-- App items will be dynamically generated here -->
@@ -169,6 +234,7 @@
 
         function generateAppList() {
             const appListContainer = document.getElementById('app-list');
+            appListContainer.innerHTML = ''; // Clear the app list before generating
             apps.forEach((app, index) => {
                 const appItem = document.createElement('div');
                 appItem.classList.add('app-item');
@@ -205,6 +271,25 @@
             });
         }
 
+        function filterApps() {
+            const query = document.getElementById('search-bar').value.toLowerCase();
+            const appItems = document.querySelectorAll('.app-item');
+
+            appItems.forEach((item, index) => {
+                const appName = item.querySelector('h2').textContent.toLowerCase();
+                const appDescription = item.querySelector('p').textContent.toLowerCase();
+                if (appName.includes(query) || appDescription.includes(query)) {
+                    item.style.display = 'flex';
+                    if (index === 0) {
+                        item.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        document.getElementById('search-bar').addEventListener('input', filterApps);
         window.onload = generateAppList;
     </script>
 </body>
