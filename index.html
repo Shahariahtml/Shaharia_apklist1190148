@@ -16,21 +16,8 @@
         }
       }
       
-      
-@keyframes flip {
-  0% {
-    transform: perspective(400px) rotateX(0);
-  }
-  100% {
-    transform: perspective(400px) rotateX(175deg);
-  }
-}
+   
 
-      
-   
-   .flip { animation: flip 1s infinite; transform-style: preserve-3d; backface-visibility: hidden; }
-   
-   
       @keyframes slideInUp {
         from {
           transform: translateY(20px);
@@ -99,7 +86,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 30px;
+        margin-bottom: 50px;
       }
 
       header h1 {
@@ -193,7 +180,7 @@
         border-radius: 5px;
         color: white;
         cursor: pointer;
-        transition: transform 1.5s;
+        transition: background-color 0.5s, transform 0.5s;
         font-size: 1em;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         border: true;
@@ -209,10 +196,8 @@
         box-shadow: 0 0 20px rgba(0, 0, 10, 0.5);
         color: black;
         border-color: #9aff40;
-        animation: flip 0.5s ease-in-out;
-        transition:transform 0s;
-        transition: background-color 1s ease; /* Longer transition for background-color */ }
-        
+        animation: fill 0.5s ease-in-out;
+        transition:transform 0.1s;
       }
 
       .app-icon {
